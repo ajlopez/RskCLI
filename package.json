@@ -1,0 +1,26 @@
+{
+    "name": "rskapi",
+    "description": "RSK Command Line Tool",
+    "keywords": [
+        "rsk",
+        "ethereum",
+        "cli"
+    ],
+    "version": "0.0.1alpha",
+    "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ajlopez/RskCLI.git"
+    },
+    "main": "./lib/rskcli.js",
+    "engines": {
+        "node": ">= 8.0.0"
+    },
+    "scripts": {
+        "test": "simpleunit -r ./test"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}
