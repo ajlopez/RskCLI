@@ -1,5 +1,7 @@
 
 const utils = require('../lib/utils');
+const configs = require('../lib/config');
+const newaccount = require('../lib/commands/newaccount');
 
 exports['get value from string'] = function (test) {
     const result = utils.getValue('100000');
@@ -41,4 +43,49 @@ exports['get value from long hexa string'] = function (test) {
     
     test.ok(result);
     test.strictEqual(result, 1);
+};
+
+exports['get address from account'] = function (test) {
+    const account = newaccount.execute([ 'alice' ]);
+    const config = configs.loadConfiguration();
+    
+    const result = utils.getAddress(config, 'alice');
+    
+    test.ok(result);
+    test.equal(result, account.address);
+};
+
+exports['get address from simple account'] = function (test) {
+    const config = configs.loadConfiguration();
+    config.accounts.alice = '0x010203';
+    configs.saveConfiguration(config);
+    
+    const result = utils.getAddress(config, 'alice');
+    
+    test.ok(result);
+    test.equal(result, config.accounts.alice);
+};
+
+exports['get account'] = function (test) {
+    const account = newaccount.execute([ 'alice' ]);
+    const config = configs.loadConfiguration();
+    
+    const result = utils.getAccount(config, 'alice');
+    
+    test.ok(result);
+    test.deepEqual(result, account);
+};
+
+exports['get unknown account'] = function (test) {
+    const config = configs.loadConfiguration();
+    const result = utils.getAccount(config, 'foo');
+    
+    test.strictEqual(result, null);
+};
+
+exports['get unknown address'] = function (test) {
+    const config = configs.loadConfiguration();
+    const result = utils.getAddress(config, 'foo');
+    
+    test.strictEqual(result, null);
 };
