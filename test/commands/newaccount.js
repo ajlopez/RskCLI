@@ -9,7 +9,9 @@ exports['new account'] = function (test) {
     
     configs.saveConfiguration(config);
     
-    newaccount.execute([ 'alice' ]);
+    const result = newaccount.execute([ 'alice' ]);
+    
+    test.ok(result);
     
     const newconfig = configs.loadConfiguration();
     
@@ -21,4 +23,7 @@ exports['new account'] = function (test) {
     test.ok(newconfig.accounts.alice.privateKey);
     test.ok(newconfig.accounts.alice.publicKey);
     test.ok(newconfig.accounts.alice.address);
+    
+    test.deepEqual(result, newconfig.accounts.alice);
 };
+
