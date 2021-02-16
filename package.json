@@ -1,4 +1,4 @@
-{
+    {
     "name": "rskclitool",
     "description": "RSK Command Line Tool",
     "keywords": [
@@ -20,7 +20,9 @@
         "test": "simpleunit -r ./test"
     },
     "dependencies": {
+        "rskapi": "0.0.16"
     },
     "devDependencies": {
+        "simpleunit": "0.0.8"
     }
 }
