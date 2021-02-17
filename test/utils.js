@@ -89,3 +89,28 @@ exports['get unknown address'] = function (test) {
     
     test.strictEqual(result, null);
 };
+
+exports['with decimals'] = function (test) {
+    test.strictEqual(utils.withDecimals(0, 0), '0');
+    test.strictEqual(utils.withDecimals(0, 18), '0');
+    test.strictEqual(utils.withDecimals('0', 0), '0');
+    test.strictEqual(utils.withDecimals('0', 18), '0');
+    test.strictEqual(utils.withDecimals('0x0', 0), '0');
+    test.strictEqual(utils.withDecimals('0x0', 18), '0');
+    test.strictEqual(utils.withDecimals('000000', 0), '0');
+    test.strictEqual(utils.withDecimals('000000', 18), '0');
+    test.strictEqual(utils.withDecimals('0x000000', 0), '0');
+    test.strictEqual(utils.withDecimals('0x000000', 18), '0');
+    test.strictEqual(utils.withDecimals('0x00000000000000000000000', 0), '0');
+    test.strictEqual(utils.withDecimals('0x00000000000000000000000', 18), '0');
+
+    test.strictEqual(utils.withDecimals('0x00000000000000000000001', 0), '1');
+    test.strictEqual(utils.withDecimals('0x00000000000000000000001', 18), '0.000000000000000001');
+
+    test.strictEqual(utils.withDecimals(100, 0), '100');
+    test.strictEqual(utils.withDecimals(100, 6), '0.0001');
+    test.strictEqual(utils.withDecimals(100000000, 6), '100');
+    test.strictEqual(utils.withDecimals(100000001, 6), '100.000001');
+    test.strictEqual(utils.withDecimals(100000010, 6), '100.00001');
+}
+
