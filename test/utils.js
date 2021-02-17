@@ -114,3 +114,42 @@ exports['with decimals'] = function (test) {
     test.strictEqual(utils.withDecimals(100000010, 6), '100.00001');
 }
 
+exports['get null arguments'] = function (test) {
+    test.deepEqual(utils.getArguments({}, null), []);
+};
+
+exports['get decimal numbers arguments'] = function (test) {
+    test.deepEqual(utils.getArguments({}, '123,42'), [ '123', '42' ]);
+};
+
+exports['get hexadecimal numbers arguments'] = function (test) {
+    test.deepEqual(utils.getArguments({}, '0x0123,0x42'), [ '0x0123', '0x42' ]);
+};
+
+exports['get string arguments'] = function (test) {
+    test.deepEqual(utils.getArguments({}, '"alice"'), [ 'alice' ]);
+    test.deepEqual(utils.getArguments({}, "'alice'"), [ 'alice' ]);
+};
+
+exports['get name argument'] = function (test) {
+    test.deepEqual(utils.getArguments({}, 'alice'), [ 'alice' ]);
+};
+
+exports['get address from simple account argument'] = function (test) {
+    test.deepEqual(utils.getArguments({
+        accounts: {
+            alice: '0x0102'
+        }
+    }, 'alice'), [ '0x0102' ]);
+};
+
+exports['get address from account argument'] = function (test) {
+    test.deepEqual(utils.getArguments({
+        accounts: {
+            alice: {
+                address: '0x0102'
+            }
+        }
+    }, 'alice'), [ '0x0102' ]);
+};
+
