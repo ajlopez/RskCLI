@@ -30,3 +30,30 @@ exports['transfer'] = async function (test) {
     test.done();
 };
 
+exports['transfer with gas in flag'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    newaccount.execute([ 'bob' ]);
+    
+    const config = configs.loadConfiguration();
+    
+    const client = {
+        transfer: function (from, to, value, options) {
+            test.deepEqual(from, config.accounts.alice);
+            test.equal(to, config.accounts.bob.address);
+            test.strictEqual(value, 100000);
+            test.deepEqual(options, { gas: 100000 });
+            
+            return '0x010203';
+        }
+    };
+    
+    transfer.useClient(client);
+    
+    const tx = await transfer.execute([ 'alice', 'bob', '100000', '-g', 100000 ]);
+    
+    test.ok(tx);
+    test.equal(tx, '0x010203');
+    
+    test.done();
+};
+
