@@ -28,7 +28,7 @@ exports['get big value from hexa string'] = function (test) {
     const result = utils.getValue('0x1000000000000000000000000000');
     
     test.ok(result);
-    test.strictEqual(result, '0x1000000000000000000000000000');
+    test.strictEqual(result, '324518553658426726783156020576256');
 };
 
 exports['get value from long string'] = function (test) {
