@@ -3,6 +3,8 @@ const utils = require('../lib/utils');
 const configs = require('../lib/config');
 const newaccount = require('../lib/commands/newaccount');
 
+const path = require('path');
+
 exports['get value from string'] = function (test) {
     const result = utils.getValue('100000');
     
@@ -151,5 +153,15 @@ exports['get address from account argument'] = function (test) {
             }
         }
     }, 'alice'), [ '0x0102' ]);
+};
+
+exports['get contract'] = function (test) {
+    const cpath = path.join(__dirname, '..', 'contracts');
+    const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
+    
+    const result = utils.getContract('Counter', cpath);
+    
+    test.ok(result);
+    test.deepEqual(result, contract);
 };
 
