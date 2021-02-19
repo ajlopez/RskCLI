@@ -156,7 +156,7 @@ exports['get address from account argument'] = function (test) {
 };
 
 exports['get contract'] = function (test) {
-    const cpath = path.join(__dirname, '..', 'contracts');
+    const cpath = path.join(__dirname, 'contracts');
     const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
     
     const result = utils.getContract('Counter', cpath);
