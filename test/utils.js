@@ -165,3 +165,13 @@ exports['get contract'] = function (test) {
     test.deepEqual(result, contract);
 };
 
+exports['get transaction options'] = function (test) {
+    test.deepEqual(utils.getTransactionOptions(), {});
+    test.deepEqual(utils.getTransactionOptions(null), {});
+    test.deepEqual(utils.getTransactionOptions({}), {});
+    test.deepEqual(utils.getTransactionOptions({ gas: 100000 }), { gas: 100000 });
+    test.deepEqual(utils.getTransactionOptions({ gas: 100000, value: 1000000 }), { gas: 100000, value: 1000000 });
+    test.deepEqual(utils.getTransactionOptions({ gas: 100000, quick: true }), { gas: 100000 });    
+    test.deepEqual(utils.getTransactionOptions({ gasPrice: 1000, quick: true }), { gasPrice: 1000 });    
+}
+
