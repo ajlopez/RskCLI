@@ -175,3 +175,14 @@ exports['get transaction options'] = function (test) {
     test.deepEqual(utils.getTransactionOptions({ gasPrice: 1000, quick: true }), { gasPrice: 1000 });    
 }
 
+exports['get transaction options using config'] = function (test) {
+    test.deepEqual(utils.getTransactionOptions({}, { options: { gas: 100000 } }), { gas: 100000 });
+    test.deepEqual(utils.getTransactionOptions({}, { options: { gas: 100000, value: 1000000 } }), { gas: 100000, value: 1000000 });
+    test.deepEqual(utils.getTransactionOptions({}, { options: { gas: 100000, quick: true } }), { gas: 100000 });    
+    test.deepEqual(utils.getTransactionOptions({}, { options: { gasPrice: 1000, quick: true } }), { gasPrice: 1000 });    
+    test.deepEqual(utils.getTransactionOptions({ gas: 100000 }, { options: { gasPrice: 1000, quick: true } }), { gas: 100000, gasPrice: 1000 });    
+    test.deepEqual(utils.getTransactionOptions({ gas: 100000 }, { options: { gasPrice: 1000, quick: true, gas: 1 } }), { gas: 100000, gasPrice: 1000 });    
+    test.deepEqual(utils.getTransactionOptions({ value: 100000 }, { options: { gasPrice: 1000, quick: true, value: 1 } }), { gasPrice: 1000, value: 100000 });    
+    test.deepEqual(utils.getTransactionOptions({ gasPrice: 100000 }, { options: { gasPrice: 1000, quick: true } }), { gasPrice: 100000 });    
+}
+
