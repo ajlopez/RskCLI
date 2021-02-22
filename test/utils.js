@@ -68,6 +68,36 @@ exports['get address from simple account'] = function (test) {
     test.equal(result, config.accounts.alice);
 };
 
+exports['get address from instance'] = function (test) {
+    const config = configs.loadConfiguration();
+    config.instances.hello = { address: '0x010203' };
+    configs.saveConfiguration(config);
+    
+    const result = utils.getAddress(config, 'hello');
+    
+    test.ok(result);
+    test.equal(result, config.instances.hello.address);
+};
+
+exports['get address from simple instance'] = function (test) {
+    const config = configs.loadConfiguration();
+    config.instances.hello = '0x010203';
+    configs.saveConfiguration(config);
+    
+    const result = utils.getAddress(config, 'hello');
+    
+    test.ok(result);
+    test.equal(result, config.instances.hello);
+};
+
+exports['get address from explicit address'] = function (test) {
+    const config = configs.loadConfiguration();
+    const result = utils.getAddress(config, '0x040506');
+    
+    test.ok(result);
+    test.equal(result, '0x040506');
+};
+
 exports['get account'] = function (test) {
     const account = newaccount.execute([ 'alice' ]);
     const config = configs.loadConfiguration();
