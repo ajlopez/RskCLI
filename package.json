@@ -21,7 +21,7 @@
     },
     "dependencies": {
         "rskapi": "0.0.16",
-        "simpleargs": "0.0.3"
+        "simpleargs": "0.0.4"
     },
     "devDependencies": {
         "simpleunit": "0.0.8"
