@@ -150,6 +150,10 @@ exports['get null arguments'] = function (test) {
     test.deepEqual(utils.getArguments({}, null), []);
 };
 
+exports['get arguments from number'] = function (test) {
+    test.deepEqual(utils.getArguments({}, 42), [ 42 ]);
+};
+
 exports['get decimal numbers arguments'] = function (test) {
     test.deepEqual(utils.getArguments({}, '123,42'), [ '123', '42' ]);
 };

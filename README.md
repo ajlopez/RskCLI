@@ -18,6 +18,7 @@
 - setnetwork command
 - code command
 - nonce command
+- simpleargs not converting string to numbers
 
 ## License
 
