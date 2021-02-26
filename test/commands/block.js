@@ -1,21 +1,21 @@
 
-const transaction = require('../../lib/commands/transaction');
+const block = require('../../lib/commands/block');
 const configs = require('../../lib/config');
 
-exports['get transaction'] = async function (test) {
+exports['get block'] = async function (test) {
     const config = configs.loadConfiguration();
     
     const client = {
-        transaction: function (hash) {
+        block: function (hash) {
             test.equal(hash, '0x010203');
             
             return { gas: '0x1000' };
         }
     };
     
-    transaction.useClient(client);
+    block.useClient(client);
     
-    const result = await transaction.execute([ '0x010203' ]);
+    const result = await block.execute([ '0x010203' ]);
     
     test.ok(result);
     test.deepEqual(result, { gas: '0x1000' });
@@ -23,20 +23,20 @@ exports['get transaction'] = async function (test) {
     test.done();
 };
 
-exports['get transaction property'] = async function (test) {
+exports['get block property'] = async function (test) {
     const config = configs.loadConfiguration();
     
     const client = {
-        transaction: function (hash) {
+        block: function (hash) {
             test.equal(hash, '0x010203');
             
             return { gas: '0x1000' };
         }
     };
     
-    transaction.useClient(client);
+    block.useClient(client);
     
-    const result = await transaction.execute([ '0x010203', 'gas' ]);
+    const result = await block.execute([ '0x010203', 'gas' ]);
     
     test.ok(result);
     test.strictEqual(result, 0x1000);
