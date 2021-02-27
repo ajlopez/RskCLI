@@ -52,6 +52,35 @@ exports['deploy'] = async function (test) {
     test.done();
 };
 
+exports['deploy with quick flag'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    
+    const config = configs.loadConfiguration();
+    
+    const cpath = path.join(__dirname, '..', 'contracts');
+    const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
+    
+    const client = {
+        deploy: function (from, bytecode, args, options) {
+            test.deepEqual(from, config.accounts.alice);
+            test.deepEqual(options, {});
+            test.deepEqual(args, []);
+            test.equal(bytecode, contract.bytecode);
+            
+            return '0x010203';
+        }
+    };
+    
+    deploy.useClient(client);
+    
+    const result = await deploy.execute([ 'alice', 'counter', 'Counter', cpath, '-q' ]);
+    
+    test.ok(result);
+    test.equal(result, '0x010203');
+    
+    test.done();
+};
+
 exports['deploy with constructor types and arguments'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     

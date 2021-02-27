@@ -15,6 +15,10 @@
 - .gitignore notice or update
 - help command
 - setnetwork command
+- pending transactions when quick flag in deploy, invoke, transfer
+- pending command
+- wait command
+- no of time waiting receipts as option
 
 ## License
 
