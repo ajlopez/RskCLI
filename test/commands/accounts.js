@@ -21,7 +21,7 @@ exports['retrieve accounts'] = async function (test) {
     
     accounts.useClient(client);
     
-    const result = await accounts.execute();
+    const result = await accounts.execute([]);
     
     test.deepEqual(result, accs);
     test.done();
