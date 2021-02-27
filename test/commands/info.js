@@ -4,13 +4,14 @@ const configs = require('../../lib/config');
 const sethost = require('../../lib/commands/sethost');
 const rskapi = require('rskapi');
 
-exports['get host and block number'] = async function (test) {
+exports['get host, block number and chain id'] = async function (test) {
     sethost.execute([ 'http://localhost:4444' ]);
     const config = configs.loadConfiguration();
     
     const provider = createProvider();
     
     provider.eth_blockNumber = function () { return 42; };
+    provider.eth_chainId = function () { return 33; };
         
     info.useClient(rskapi.client(provider));
     
@@ -19,7 +20,8 @@ exports['get host and block number'] = async function (test) {
     test.ok(result);
     test.deepEqual(result, { 
         host: 'http://localhost:4444',
-        blockNumber: 42
+        blockNumber: 42,
+        chainId: 33
     });
     
     test.done();
