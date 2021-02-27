@@ -14,7 +14,6 @@
 - .gitignore notice or update
 - help command
 - setnetwork command
-- info command
 
 ## License
 
