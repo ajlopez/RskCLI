@@ -7,7 +7,8 @@
 ## To Do
 
 - deploy command with constructor types and arguments
-- quick flag in deploy and invoke commands
+- quick flag in deploy command
+- call command with output argument types
 - Commands description
 - Tutorial
 - Save and restore configuration

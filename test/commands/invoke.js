@@ -46,6 +46,37 @@ exports['invoke'] = async function (test) {
     test.done();
 };
 
+exports['invoke with quick flag'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    newaccount.execute([ 'contract' ]);   
+    
+    const config = configs.loadConfiguration();
+    
+    const cpath = path.join(__dirname, '..', 'contracts');
+    const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
+    
+    const client = {
+        invoke: function (from, to, fn, args, options) {
+            test.deepEqual(from, config.accounts.alice);
+            test.equal(to, config.accounts.contract.address);
+            test.deepEqual(options, {});
+            test.equal(fn, "bar(string,uint256)");
+            test.deepEqual(args, [ 'foo', 42 ]);
+            
+            return '0x010203';
+        }
+    };
+    
+    invoke.useClient(client);
+    
+    const txr = await invoke.execute([ 'alice', 'contract', 'bar(string,uint256)', "foo,42", '--quick' ]);
+    
+    test.ok(txr);
+    test.equal(txr, '0x010203');
+    
+    test.done();
+};
+
 exports['invoke with one argument'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     newaccount.execute([ 'contract' ]);   
