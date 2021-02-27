@@ -38,6 +38,33 @@ exports['transfer'] = async function (test) {
     test.done();
 };
 
+exports['transfer with quick flag'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    newaccount.execute([ 'bob' ]);
+    
+    const config = configs.loadConfiguration();
+    
+    const client = {
+        transfer: function (from, to, value, options) {
+            test.deepEqual(from, config.accounts.alice);
+            test.equal(to, config.accounts.bob.address);
+            test.strictEqual(value, 100000);
+            test.deepEqual(options, {});
+            
+            return '0x010203';
+        }
+    };
+    
+    transfer.useClient(client);
+    
+    const txr = await transfer.execute([ 'alice', 'bob', '100000', '--quick' ]);
+    
+    test.ok(txr);
+    test.equal(txr, '0x010203');
+    
+    test.done();
+};
+
 exports['transfer with gas in flag'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     newaccount.execute([ 'bob' ]);
