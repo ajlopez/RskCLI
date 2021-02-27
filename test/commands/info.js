@@ -45,9 +45,14 @@ exports['using another host/provider'] = async function (test) {
     const result = await info.execute([ provider ]);
     
     test.ok(result);
+    test.ok(result.host);
+    test.ok(typeof result.host === 'object');
+    test.ok(typeof result.host.call === 'function');
+    
+    delete result.host;
+    
     test.deepEqual(result, { 
-        host: 'http://localhost:4444',
-        blockNumber: 42,
+            blockNumber: 42,
         chainId: 33,
         networkVersion: 144,
         clientVersion: 'version'
