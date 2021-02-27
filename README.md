@@ -14,9 +14,6 @@
 - .gitignore notice or update
 - help command
 - setnetwork command
-- code command
-- nonce command
-- simpleargs not converting string to numbers
 - info command
 
 ## License
