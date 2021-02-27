@@ -7,8 +7,6 @@
 ## To Do
 
 - deploy command with constructor types and arguments
-- invoke command
-- call command
 - quick flag in deploy and invoke commands
 - Commands description
 - Tutorial
@@ -19,6 +17,7 @@
 - code command
 - nonce command
 - simpleargs not converting string to numbers
+- info command
 
 ## License
 
