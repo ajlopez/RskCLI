@@ -33,3 +33,21 @@ exports['set account'] = async function (test) {
     test.done();
 };
 
+exports['set account using address'] = async function (test) {
+    const client = {
+        accounts: function () { return accs; }
+    };
+    
+    setaccount.useClient(client);
+    
+    const result = await setaccount.execute([ 'alice', accs[1] ]);
+    
+    test.equal(result, accs[1]);
+    
+    const config = configs.loadConfiguration();
+
+    test.equal(config.accounts.alice, accs[1]);
+    
+    test.done();
+};
+
