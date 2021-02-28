@@ -73,10 +73,23 @@ exports['deploy with quick flag'] = async function (test) {
     
     deploy.useClient(client);
     
-    const result = await deploy.execute([ 'alice', 'counter', 'Counter', cpath, '-q' ]);
+    const txhash = await deploy.execute([ 'alice', 'counter', 'Counter', cpath, '-q' ]);
     
-    test.ok(result);
-    test.equal(result, '0x010203');
+    test.ok(txhash);
+    test.equal(txhash, '0x010203');
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig);
+    test.ok(newconfig.pending);
+    test.ok(newconfig.pending[txhash]);
+    test.deepEqual(newconfig.pending[txhash], {
+        description: 'deploy alice counter Counter ' + cpath + ' -q',
+        instance: 'counter',
+        contract: 'Counter',
+        path: cpath
+    });
+    test.done();
     
     test.done();
 };
