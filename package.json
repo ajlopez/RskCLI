@@ -13,6 +13,9 @@
         "url": "git://github.com/ajlopez/rskclitools.git"
     },
     "main": "./lib/rskcli.js",
+    "bin": {
+        "rskcli": "lib/run.js"
+    },
     "engines": {
         "node": ">= 8.0.0"
     },
