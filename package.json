@@ -23,7 +23,7 @@
         "test": "simpleunit -r ./test"
     },
     "dependencies": {
-        "rskapi": "0.0.17",
+        "rskapi": "0.0.18",
         "simpleargs": "0.0.4"
     },
     "devDependencies": {
