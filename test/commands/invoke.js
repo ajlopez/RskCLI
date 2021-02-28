@@ -69,11 +69,17 @@ exports['invoke with quick flag'] = async function (test) {
     
     invoke.useClient(client);
     
-    const txr = await invoke.execute([ 'alice', 'contract', 'bar(string,uint256)', "foo,42", '--quick' ]);
+    const txhash = await invoke.execute([ 'alice', 'contract', 'bar(string,uint256)', "foo,42", '--quick' ]);
     
-    test.ok(txr);
-    test.equal(txr, '0x010203');
+    test.ok(txhash);
+    test.equal(txhash, '0x010203');
     
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig);
+    test.ok(newconfig.pending);
+    test.ok(newconfig.pending[txhash]);
+    test.equal(newconfig.pending[txhash].description, 'invoke alice contract bar(string,uint256) foo,42 --quick');
     test.done();
 };
 
