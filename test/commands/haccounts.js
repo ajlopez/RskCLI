@@ -1,5 +1,5 @@
 
-const accounts = require('../../lib/commands/accounts');
+const accounts = require('../../lib/commands/haccounts');
 
 const accs = [
   '0x4e16fc0dd89574d8958ec1851aa332dae3d9521d',
