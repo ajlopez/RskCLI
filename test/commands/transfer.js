@@ -57,10 +57,17 @@ exports['transfer with quick flag'] = async function (test) {
     
     transfer.useClient(client);
     
-    const txr = await transfer.execute([ 'alice', 'bob', '100000', '--quick' ]);
+    const txhash = await transfer.execute([ 'alice', 'bob', '100000', '--quick' ]);
     
-    test.ok(txr);
-    test.equal(txr, '0x010203');
+    test.ok(txhash);
+    test.equal(txhash, '0x010203');
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig);
+    test.ok(newconfig.pending);
+    test.ok(newconfig.pending[txhash]);
+    test.equal(newconfig.pending[txhash].description, 'transfer alice bob 100000 --quick');
     
     test.done();
 };
