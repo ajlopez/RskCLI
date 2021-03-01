@@ -241,6 +241,7 @@ exports['get types'] = function (test) {
     test.deepEqual(utils.getTypes(null), []);
     test.deepEqual(utils.getTypes(""), []);
     test.deepEqual(utils.getTypes("  "), []);
+    test.deepEqual(utils.getTypes("string"), [ "string" ]);
     test.deepEqual(utils.getTypes("string,bytes"), [ "string", "bytes" ]);
     test.deepEqual(utils.getTypes(" string , bytes"), [ "string", "bytes" ]);
     test.deepEqual(utils.getTypes("(string , bytes)"), [ "string", "bytes" ]);
