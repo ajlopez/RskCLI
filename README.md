@@ -12,7 +12,6 @@ code, info, block, transaction,  receipts, nonce
 
 ## To Do
 
-- call command with output argument types
 - Commands description
 - Tutorial
 - Save and restore configuration
