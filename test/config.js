@@ -44,3 +44,17 @@ exports['put config with invalid name'] = function (test) {
     }
 };
 
+exports['put config and get config'] = function (test) {
+    const conf = config.loadConfiguration();
+    
+    conf.random = Math.floor(Math.random() * 1000000);
+    
+    config.putConfiguration(conf, 'test');
+    config.getConfiguration('test');
+    
+    const newconf = config.loadConfiguration();
+    
+    test.ok(newconf)
+    test.deepEqual(newconf, conf);
+};
+
