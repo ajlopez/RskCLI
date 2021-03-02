@@ -30,3 +30,17 @@ exports['put config'] = function (test) {
     test.deepEqual(newconf, conf);
 };
 
+exports['put config with invalid name'] = function (test) {
+    const conf = config.loadConfiguration();
+    
+    conf.random = Math.floor(Math.random() * 1000000);
+    
+    try {
+        config.putConfiguration(conf, 'test.test');
+        test.fail();
+    }
+    catch (ex) {
+        test.equal(ex, 'Invalid configuration name');
+    }
+};
+
