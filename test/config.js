@@ -16,3 +16,17 @@ exports['load default config'] = function (test) {
     test.ok(conf.options)
     test.ok(typeof conf.options === 'object');
 };
+
+exports['put config'] = function (test) {
+    const conf = config.loadConfiguration();
+    
+    conf.random = Math.floor(Math.random() * 1000000);
+    
+    config.putConfiguration(conf, 'test');
+    
+    const newconf = config.loadConfiguration('rskcli-test.json');
+    
+    test.ok(newconf)
+    test.deepEqual(newconf, conf);
+};
+
