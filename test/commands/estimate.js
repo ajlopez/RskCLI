@@ -7,14 +7,11 @@ const simpleabi = require('simpleabi');
 
 const path = require('path');
 
-exports['estimate'] = async function (test) {
+exports['estimate invoke'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     newaccount.execute([ 'contract' ]);   
     
     const config = configs.loadConfiguration();
-    
-    const cpath = path.join(__dirname, '..', 'contracts');
-    const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
     
     const client = {
         estimate: function (from, to, fn, args, options) {
@@ -30,10 +27,26 @@ exports['estimate'] = async function (test) {
     
     estimate.useClient(client);
     
-    const result = await estimate.execute([ 'alice', 'contract', 'bar(string,uint256)', "foo,42" ]);
+    const result = await estimate.execute([ 'invoke', 'alice', 'contract', 'bar(string,uint256)', "foo,42" ]);
     
     test.ok(result);
     test.deepEqual(result, 100000);
     
+    test.done();
+};
+
+exports['estimate invalid type'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    newaccount.execute([ 'contract' ]);   
+    
+    const config = configs.loadConfiguration();
+    
+    
+    const result = await estimate.execute([ 'foo', 'alice', 'contract', 'bar(string,uint256)', "foo,42" ]);
+    
+    test.deepEqual(result, {
+        error: "Invalid type 'foo': it should be 'invoke'"
+    });
+
     test.done();
 };
