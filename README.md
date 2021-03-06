@@ -12,14 +12,13 @@ code, info, block, transaction,  receipts, nonce
 
 ## To Do
 
+- pending command
+- wait command
 - Commands description
-- Tutorial
-- Save and restore configuration
+- Tutorial- Save and restore configuration
 - .gitignore notice or update
 - help command
 - setnetwork command
-- pending command
-- wait command
 - no of time waiting receipts as option
 
 ## References
