@@ -42,11 +42,11 @@ Example, using RSK mainnet:
 > rskcli info https://public-node.rsk.co:443
 
 host https://public-node.rsk.co:443
-block number 3164208
+block number 3164289
 chain id 0x1e
 network version 30
 client version RskJ/2.2.0/Linux/Java1.8/PAPYRUS-dev
-rskcli info <host>
+date/time 2021-03-07T13:48:14.425Z
 ```
 
 (notice that an explicit port should be specified 
