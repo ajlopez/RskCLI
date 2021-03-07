@@ -16,3 +16,18 @@ exports['set host'] = function (test) {
     test.ok(newconfig);
     test.equal(newconfig.host, 'http://localhost:4444');
 };
+
+exports['set using alias'] = function (test) {
+    const config = configs.loadConfiguration();
+    
+    delete config.host;
+    
+    configs.saveConfiguration(config);
+    
+    sethost.execute([ 'ganache' ]);
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig);
+    test.equal(newconfig.host, 'http://localhost:8545');
+};
