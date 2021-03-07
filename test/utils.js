@@ -249,3 +249,16 @@ exports['get types'] = function (test) {
     test.deepEqual(utils.getTypes("fn()"), []);
 };
 
+exports['get host'] = function (test) {
+    test.equal(utils.getHost('http://localhost:8545'), 'http://localhost:8545');
+    test.equal(utils.getHost('http://localhost:4444'), 'http://localhost:4444');
+    test.equal(utils.getHost('http://public-node.rsk.co:443'), 'http://public-node.rsk.co:443');
+    test.equal(utils.getHost('ganache'), 'http://localhost:8545');
+    test.equal(utils.getHost('truffle'), 'http://localhost:8545');
+    test.equal(utils.getHost('hardhat'), 'http://localhost:8545');
+    test.equal(utils.getHost('regtest'), 'http://localhost:4444');
+    test.equal(utils.getHost('local'), 'http://localhost:4444');
+    test.equal(utils.getHost('testnet'), 'https://public-node.testnet.rsk.co:443');
+    test.equal(utils.getHost('mainnet'), 'https://public-node.rsk.co:443');
+};
+
