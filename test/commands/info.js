@@ -20,6 +20,10 @@ exports['get host, block number, chain id, network version and client version'] 
     const result = await info.execute([]);
     
     test.ok(result);
+    test.ok(result.datetime);
+    
+    delete result.datetime;
+    
     test.deepEqual(result, { 
         host: 'http://localhost:4444',
         blockNumber: 42,
@@ -50,9 +54,10 @@ exports['using another host/provider'] = async function (test) {
     test.ok(typeof result.host.call === 'function');
     
     delete result.host;
+    delete result.datetime;
     
     test.deepEqual(result, { 
-            blockNumber: 42,
+        blockNumber: 42,
         chainId: 33,
         networkVersion: 144,
         clientVersion: 'version'
