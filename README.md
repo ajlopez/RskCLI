@@ -52,6 +52,15 @@ date/time 2021-03-07T13:48:14.425Z
 (notice that an explicit port should be specified 
 when using `https`)
 
+If no host is specified, it uses the host from the last `sethost` command.
+
+You can use alias names instead of explicit entrypoint:
+
+- `ganache`, `truffle`, `hardhat` are equivalent to `http://localhost:8545`
+- `local`, `regtest` are equivalent to `http://localhost:4444`
+- `testnet` is equivalent to `https://public-node.testnet.rsk.co:443`
+- `mainnet` is equivalent to `https://public-node.rsk.co:443`
+
 
 ### Set Host
 
@@ -77,6 +86,13 @@ in the subsequent commands.
 
 This command should be execute BEFORE other commands (except `rskcli info` that
 takes the host information from the command line)
+
+You can use alias names instead of explicit entrypoint:
+
+- `ganache`, `truffle`, `hardhat` are equivalent to `http://localhost:8545`
+- `local`, `regtest` are equivalent to `http://localhost:4444`
+- `testnet` is equivalent to `https://public-node.testnet.rsk.co:443`
+- `mainnet` is equivalent to `https://public-node.rsk.co:443`
 
 ### List Host Accounts
 
