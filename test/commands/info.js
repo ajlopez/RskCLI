@@ -8,6 +8,10 @@ exports['get host, block number, chain id, network version and client version'] 
     sethost.execute([ 'http://localhost:4444' ]);
     const config = configs.loadConfiguration();
     
+    delete config.info;
+    
+    configs.saveConfiguration(config);
+    
     const provider = createProvider();
     
     provider.eth_blockNumber = function () { return 42; };
@@ -18,11 +22,17 @@ exports['get host, block number, chain id, network version and client version'] 
     info.useClient(rskapi.client(provider));
     
     const result = await info.execute([]);
-    
+
     test.ok(result);
     test.ok(result.datetime);
-    
     delete result.datetime;
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig.info);
+    test.ok(newconfig.info.datetime);
+    delete newconfig.info.datetime;
+    test.deepEqual(newconfig.info, result);
     
     test.deepEqual(result, { 
         host: 'http://localhost:4444',
