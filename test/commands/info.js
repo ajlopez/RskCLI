@@ -29,6 +29,44 @@ exports['get host, block number, chain id, network version and client version'] 
     
     const newconfig = configs.loadConfiguration();
     
+    test.ok(!newconfig.info);
+    
+    test.deepEqual(result, { 
+        host: 'http://localhost:4444',
+        blockNumber: 42,
+        chainId: 33,
+        networkVersion: 144,
+        clientVersion: 'version'
+    });
+    
+    test.done();
+};
+
+exports['get host, block number, chain id, network version and client version using save flag'] = async function (test) {
+    sethost.execute([ 'http://localhost:4444' ]);
+    const config = configs.loadConfiguration();
+    
+    delete config.info;
+    
+    configs.saveConfiguration(config);
+    
+    const provider = createProvider();
+    
+    provider.eth_blockNumber = function () { return 42; };
+    provider.eth_chainId = function () { return 33; };
+    provider.net_version = function () { return 144; };
+    provider.web3_clientVersion = function () { return 'version'; };
+        
+    info.useClient(rskapi.client(provider));
+    
+    const result = await info.execute([ '--save' ]);
+
+    test.ok(result);
+    test.ok(result.datetime);
+    delete result.datetime;
+    
+    const newconfig = configs.loadConfiguration();
+    
     test.ok(newconfig.info);
     test.ok(newconfig.info.datetime);
     delete newconfig.info.datetime;
