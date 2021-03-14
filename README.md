@@ -122,6 +122,44 @@ Example:
 
 ### Set Account
 
+To set an account with name:
+
+```
+rskcli setaccount <name> <ordinal>
+rskcli setaccount <name> <address>
+rskcli setaccount <name> <privatekey>
+```
+
+Example, this command set `root` account using the first
+host account (number 0):
+
+```
+rskcli setaccount root 0
+```
+
+Then you can use the name of the account instead of his
+address. You can use it as the sender account (signer)
+in transfer, deploy and invoke operation, because usually
+the host accounts can sign transactions inside the node.
+
+If you already knows the address of an account and you
+want to manage it under a name:
+
+```
+rskcli setaccount alice 0x0142d73c968ad62dcd477bdc2f74aa0608195231
+```
+
+You cannot use this account as the sender in an operation
+because the tool does not know the private key.
+
+If you controls an account knowing its private key:
+
+```
+rskcli setaccount alice 0x...privatekey...
+```
+Now, you can use the symbolic name `alice` to sign
+transactions, if the account has enough funds.
+
 ### New Account
 
 ### Get Account Balance
