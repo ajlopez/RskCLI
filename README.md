@@ -162,6 +162,45 @@ transactions, if the account has enough funds.
 
 ### New Account
 
+Create a new account with symbolic name:
+
+```
+rskcli newaccount <name>
+```
+
+Examples:
+```
+rskcli newaccount root
+rskcli newaccount alice
+rskcli newaccount bob
+rskcli newaccount charlie
+```
+
+A valid random private key is generated, and then, their associated
+public key and address are derived. 
+
+Once the account is generated, you can use the name
+instead of the address in any of this tool commands.
+
+Also, having the private key, the tool commands `transfer`,
+`deploy` and `invoke` can be used to generate transactions
+signed locally, without intervention from the running node.
+
+Take into account that that information is saved in the local `rskcli.json` file,
+so it is recommended not share this file, ie, not
+include it into a public repository.
+
+In case the current folder is in a public repository
+add the following line to `.gitignore` file:
+
+```
+rskcli*.json
+```
+
+This line avoid the save of `rskcli.json` file and
+other ones that can be generated with `rskcli putconf`
+command.
+
 ### Get Account Balance
 
 ### Get Account Transaction Count
