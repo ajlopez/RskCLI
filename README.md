@@ -401,7 +401,6 @@ code, info, block, transaction,  receipts, nonce
 
 - pending command
 - wait command
-- instances command
 - Commands description
 - Tutorial- Save and restore configuration
 - .gitignore notice or update
