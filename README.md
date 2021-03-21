@@ -203,6 +203,31 @@ command.
 
 ### Get Account Balance
 
+To retrieve the balance of an account, execute:
+
+```
+rskcli balance <account>
+```
+
+The account could be specified as an hexadecimal address or as an account name.
+
+Examples:
+```
+rskcli balance 0x01000006
+rskcli balance alice
+```
+
+The first example refers to RSK bridge precompiled contract.
+
+The balance is shown in weis. You can use the option `-d`, `--decimals`
+to express the balance in ether/rbtc:
+
+```
+rskcli balance 0x01000006 -d
+rskcli balance alice --decimals
+```
+
+
 ### Get Account Transaction Count
 
 ### Get Account Code
