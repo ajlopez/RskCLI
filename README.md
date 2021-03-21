@@ -342,6 +342,10 @@ the blockchain.
 
 ### Estimate Gas for Transaction
 
+### Accounts
+
+### Instances
+
 ### Retrieve Block
 
 ### Retrieve Transaction
@@ -397,6 +401,7 @@ code, info, block, transaction,  receipts, nonce
 
 - pending command
 - wait command
+- instances command
 - Commands description
 - Tutorial- Save and restore configuration
 - .gitignore notice or update
