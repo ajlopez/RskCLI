@@ -392,6 +392,9 @@ used by the `putconf` and `getconf` commands.
 - 0.0.1 First commands: haccounts, sethost, setaccount, newaccount,
 transfer, deploy, invoke, call, estimate, 
 code, info, block, transaction,  receipts, nonce
+- 0.0.1 (Republish with fixed package name): put and get configuration,
+estimate deploy, info command, accounts command, instances command,
+setinstance command
 
 ## References
 
