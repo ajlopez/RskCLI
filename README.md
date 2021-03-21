@@ -28,6 +28,19 @@ path. The tool is invoked with the name `rskcli`.
 
 All the commands starts with `rskcli`.
 
+### Command Options
+
+Many of the following commands (not all of them) accept options:
+
+- '-d', '--dec'
+- '-g', '--gas' '<number>'
+- '-gp', '--gasPrice' '<number>'
+- '-l', '--log'
+- '-q', '--quick'
+- '-v', '--value' '<number>'
+
+There are described when it is pertinent to mention them.
+
 ### Query Info
 
 It returns the status of a blockchain node:
@@ -230,11 +243,96 @@ rskcli balance alice --decimals
 
 ### Get Account Transaction Count
 
+It's pretty similar to `balance` command.
+To retrieve the number of transactions sent by an account, execute:
+
+```
+rskcli nonce <account>
+```
+
+The account could be specified as an hexadecimal address or as an account name.
+
+Examples:
+```
+rskcli nonce 0xbd0a5547f1ae8d0de041c0ccacafc7ba28dc2f87
+rskcli nonce alice
+```
+
 ### Get Account Code
+    
+An account could be an smart contract. To retrieve the code associated
+execute:
+
+```
+rskcli code <account>
+```
+The code is an array of bytes and it is expressed 
+as an hexadecimal string.
+
+The account could be specified as an hexadecimal address or as an account name.
+
+Examples:
+```
+rskcli code 0x1ac16d9523832f9a5f4b6d7758353ed49f2f842d
+rskcli code counter
+```
 
 ### Set Instance
 
 ### Transfer
+
+To transfer value from an account to another, execute:
+```
+rskcli transfer <sender> <receiever> <value>
+```
+
+Example:
+```
+rskcli transfer alice charlie 10000000
+```
+
+The value is expressed in weis. The sender and receiver can be
+specified by name or by explicit address.
+
+The sender should be an account:
+- Exposed in the node you are using (like in `ganache` or RSK `regtest`)
+- An account with a known private key, ie, created with `newaccount` command
+or with `setaccount` given a private key.
+
+The gas limit used for a transfer is `21000` units, but you can specified
+the gas limit to use with the option `-g`, `--gas`, examples:
+
+```
+rskcli transfer alice pool 20000000 -g 100000
+rskcli transfer charlie faucet 60000000000 --gas 80000
+```
+
+Usually the gas used in a transfer transactions is `21000` but if
+your receiver account is an smart contract, it could have code
+to be executed on transfer, so you need to pay the code execution
+providing more gas units.
+
+The gas price is set using the value informed by the network. If you
+want to set the gas price explicitly, use the `-gp`, `--gasPrice` option:
+
+```
+rskcli transfer alice charlie 20000000 -gp 70000000
+rskcli transfer charlie bob 60000000000 --gasPrice 100000000
+```
+
+When the transfer transaction is sent to the node, the
+transaction hash is shown in the console. Then, the command waits
+for the mining of the transaction, querying for the transaction receipt that
+describes its execution result.
+If you want to skip that time, use the `-q`, `--quick` flag:
+
+```
+rskcli transfer alice bob 10000000 -q
+rskcli transfer charlie bob 100000000000 --quick
+```
+
+The transfer is sent but it is up to you to check its inclusion into
+the blockchain.
 
 ### Deploy a Contract
 
@@ -254,16 +352,6 @@ rskcli balance alice --decimals
 
 ### Restore Configuration
 
-## Options
-
-Many of the above commands accepts options:
-
-- '-d', '--dec'
-- '-g', '--gas' '<number>'
-- '-gp', '--gasPrice' '<number>'
-- '-l', '--log'
-- '-q', '--quick'
-- '-v', '--value' '<number>'
 
 ## Configuration File
 
