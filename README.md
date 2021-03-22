@@ -224,10 +224,19 @@ rskcli balance <account>
 
 The account could be specified as an hexadecimal address or as an account name.
 
+Also, you can specified a block number:
+```
+rskcli balance <account> <blocknumber>
+```
+
+In this case, the balance returned is the balance at that block world status.
+If the block is not specified, the world state of the current best blockchain is used.
+
 Examples:
 ```
 rskcli balance 0x01000006
 rskcli balance alice
+rskcli balance bob 1000000
 ```
 
 The first example refers to RSK bridge precompiled contract.
@@ -344,7 +353,32 @@ the blockchain.
 
 ### Accounts
 
+Retrieves information about the known accounts with name.
+
+```
+rskcli accounts
+```
+
+For each named account, this info is retrieved: name, balance, no. of
+transactions sent (the nonce), and gas availability (account balance
+divided by current gas price in network).
+
+The balance is expressed in weis. If you add the `-d`, `--decimals`, the
+balance is shown in ether/RBTC.
+
 ### Instances
+
+Retrieves information about the known smart contracts instances with name.
+
+```
+rskcli instances
+```
+
+For each named instance, this info is retrieved: name, balance, no. of
+transactions sent (the nonce), name of the original contract (if it is known).
+
+The balance is expressed in weis. If you add the `-d`, `--decimals`, the
+balance is shown in ether/RBTC.
 
 ### Retrieve Block
 
