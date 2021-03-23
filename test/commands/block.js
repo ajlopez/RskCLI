@@ -30,13 +30,13 @@ exports['get block property'] = async function (test) {
         block: function (hash) {
             test.equal(hash, '0x010203');
             
-            return { gas: '0x1000' };
+            return { gasLimit: '0x1000' };
         }
     };
     
     block.useClient(client);
     
-    const result = await block.execute([ '0x010203', 'gas' ]);
+    const result = await block.execute([ '0x010203', 'gasLimit' ]);
     
     test.ok(result);
     test.strictEqual(result, 0x1000);
