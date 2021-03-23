@@ -23,6 +23,7 @@ exports['transfer'] = async function (test) {
             test.equal(times, 0);
             
             return {
+                hash: txhash,
                 status: '0x1'
             }
         }
@@ -33,7 +34,14 @@ exports['transfer'] = async function (test) {
     const txr = await transfer.execute([ 'alice', 'bob', '100000' ]);
     
     test.ok(txr);
-    test.deepEqual(txr, { status: '0x1' });
+    test.deepEqual(txr, { hash: '0x010203', status: '0x1' });
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig);
+    test.ok(newconfig.latest);
+    test.ok(newconfig.latest.transaction);
+    test.equal(newconfig.latest.transaction, '0x010203');
     
     test.done();
 };
