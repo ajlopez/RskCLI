@@ -10,7 +10,11 @@ const path = require('path');
 exports['deploy'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     
-    const config = configs.loadConfiguration();
+    const config = configs.loadConfiguration();    
+
+    delete config.latest;
+    
+    configs.saveConfiguration(config);
     
     const cpath = path.join(__dirname, '..', 'contracts');
     const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
@@ -48,6 +52,10 @@ exports['deploy'] = async function (test) {
         address: '0x040506',
         contract: 'Counter'
     });
+    
+    test.ok(newconfig.latest);
+    test.ok(newconfig.latest.transaction);
+    test.equal(newconfig.latest.transaction, '0x010203');
     
     test.done();
 };
