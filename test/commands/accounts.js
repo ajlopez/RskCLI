@@ -42,8 +42,52 @@ exports['get accounts info'] = async function (test) {
     test.equal(result.alice.nonce, 1);
     test.equal(result.bob.nonce, 2);
     
-    test.equal(result.alice.gas, 1001/10);
-    test.equal(result.bob.gas, 1002/10);
+    test.equal(result.alice.gas, Math.floor(1001/10));
+    test.equal(result.bob.gas, Math.floor(1002/10));
+    
+    test.done();
+};
+
+exports['get accounts info with zero gas price'] = async function (test) {
+    const config = configs.loadConfiguration();
+    
+    config.accounts = {};
+    
+    configs.saveConfiguration(config);
+    
+    newaccount.execute([ 'alice' ]);
+    newaccount.execute([ 'bob' ]);
+    
+    const newconfig = configs.loadConfiguration();
+    
+    const provider = createProvider();
+    
+    let balance = 1000;
+    let nonce = 0;
+    
+    provider.eth_getBalance = function () { balance++; return balance; };
+    provider.eth_getTransactionCount = function () { nonce++; return nonce; };
+    provider.eth_gasPrice = function () { return 0; };
+        
+    accounts.useClient(rskapi.client(provider));
+    
+    const result = await accounts.execute([]);
+
+    test.ok(result);
+    test.ok(result.alice);
+    test.ok(result.bob);
+    
+    test.equal(result.alice.address, newconfig.accounts.alice.address);
+    test.equal(result.bob.address, newconfig.accounts.bob.address);
+    
+    test.equal(result.alice.balance, 1001);
+    test.equal(result.bob.balance, 1002);
+    
+    test.equal(result.alice.nonce, 1);
+    test.equal(result.bob.nonce, 2);
+    
+    test.equal(result.alice.gas, null);
+    test.equal(result.bob.gas, null);
     
     test.done();
 };
