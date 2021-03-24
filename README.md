@@ -463,6 +463,15 @@ code, info, block, transaction,  receipts, nonce
 - 0.0.1 (Republish with fixed package name): put and get configuration,
 estimate deploy, info command, accounts command, instances command,
 setinstance command
+- 0.0.2: balance command using optional block argument; save
+latest transaction in transfer command; transaction command
+retrieving the lastest transaction; property values in
+block, transaction and receipt; deploy command saves
+latest transaction; using rskapi@0.0.18; call command
+with output types but no argument; verbose options
+in some commands; execute command remove verb from 
+arguments; improved newaccount and accounts commands;
+invoke command saves latest transaction
 
 ## References
 
