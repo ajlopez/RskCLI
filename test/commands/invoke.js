@@ -12,6 +12,10 @@ exports['invoke'] = async function (test) {
     newaccount.execute([ 'contract' ]);   
     
     const config = configs.loadConfiguration();
+
+    delete config.latest;
+    
+    configs.saveConfiguration(config);
     
     const cpath = path.join(__dirname, '..', 'contracts');
     const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
@@ -43,6 +47,13 @@ exports['invoke'] = async function (test) {
     test.ok(txr);
     test.deepEqual(txr, { status: '0x1' });
     
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig.latest);
+    test.ok(newconfig.latest.transaction);
+    test.equal(newconfig.latest.transaction, '0x010203');
+
     test.done();
 };
 
