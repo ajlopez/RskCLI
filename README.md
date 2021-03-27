@@ -412,6 +412,32 @@ balance is shown in ether/RBTC.
 
 ### Retrieve Block
 
+Retrieve block by number or hash
+
+```
+rskcli block <knumber>
+rskcli block <hash>
+```
+
+You can also use the words `latest` and `earliest` to
+retrieve the latest and firt block, respectively.
+
+Examples:
+
+```
+rskcli block latest
+rskcli block 123456
+rskcli block 0x6719dfc1d42a76dfc5a5257ff7188e00aa1e8bf82b9d71b46462074244a09a3e
+```
+
+The JSON with the block information is returned. Also,
+you can specify a property:
+
+```
+rskcli block latest gasUsed
+rskcli block 123456 number
+```
+
 ### Retrieve Transaction
 
 ### Retrieve Transaction Receipt
