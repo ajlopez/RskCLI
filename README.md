@@ -182,7 +182,7 @@ rskcli setaccount root 0
 
 Then you can use the name of the account instead of his
 address. You can use it as the sender account (signer)
-in transfer, deploy and invoke operation, because usually
+in `transfer`, `deploy`, `invoke` and `call` commands, because usually
 the host accounts can sign transactions inside the node.
 
 If you already knows the address of an account and you
@@ -317,6 +317,24 @@ rskcli code counter
 ```
 
 ### Set Instance
+
+To set an smart contract instance with name:
+
+```
+rskcli setinstance <name> <address>
+```
+
+Example, this command set `token` account to point
+to a given address:
+
+```
+rskcli setinstance token 0x0142d73c968ad62dcd477bdc2f74aa0608195231
+```
+
+Then you can use the name of the instance instead of his
+address. You can use it as the receiver account
+in `transfer`, `call` and `invoke` commands.
+
 
 ### Transfer
 
