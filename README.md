@@ -393,6 +393,84 @@ the blockchain.
 
 ### Deploy a Contract
 
+To deploy a compiled contract:
+```
+rskcli deploy <sender> <instancename> <contractname> [<path>]
+rskcli deploy <sender> <instancename> <contractname> <argtypes> <arguments> [<path>]
+```
+
+Example:
+```
+rskcli deploy alice counter Counter
+rskcli deploy bob token Token string,string TOK,Token
+rskcli deploy bob token Token string,string TOK,Token ../../MyProject
+```
+
+The sender should be an account:
+- Exposed in the node you are using (like in `ganache` or RSK `regtest`)
+- An account with a known private key, ie, created with `newaccount` command
+or with `setaccount` given a private key.
+
+The instance name is the name to use to refer the
+new instance.
+
+The contract name should correspond to a compiled contract.
+If no path is specified, the compiled contract information
+is retrieved from `./build/contracts/<contractname>.json`, that
+is the usual folder where Truffle saves the compiled
+contract information. In this case, you have a `./contracts`
+local folder, and Truffle configured to compile using
+`truffle compile`.
+
+If your compiled contracts are in another folder, you
+can specify the path. Then, the contract information will
+be retrieved from `<path>/build/contracts/<contractname>.json`.
+
+The gas limit used for a deploy is `5_000_000` units, but you can specified
+the gas limit with the option `-g`, `--gas`, examples:
+
+```
+rskcli deploy alice counter Counter -g 100000
+rskcli deploy bob token BasicToken string,string TOK,Token --gas 100000
+```
+
+The gas price is set using the value informed by the network. If you
+want to set the gas price explicitly, use the `-gp`, `--gasPrice` option:
+
+```
+rskcli deploy alice counter Counter -gp 100000
+rskcli deploy bob token BasicToken string,string TOK,Token --gasPrice 100000
+```
+
+In the second example, the constructor arguments types
+are specified with `string,string` (comma separated) and their
+values are given with `TOK,Token` (again, separated by commas).
+
+When the deploy transaction is sent to the node, the
+transaction hash is shown in the console. Then, the command waits
+for the mining of the transaction, querying for the transaction receipt that
+describes its execution result.
+
+If you want to skip that time, use the `-q`, `--quick` flag:
+
+```
+rskcli deploy alice counter Counter -q
+rskcli deploy charlie token Token string,string TOK,Token --quick
+```
+
+The deploy transaction is sent but it is up to you to check its inclusion into
+the blockchain. Take into account that if you uses this
+option, the instance address will be not saved (to
+be improved in future versions).
+
+You can specify a value to be transferred to the new
+instance using the option `-v`, `--value`, examples:
+
+```
+rskcli deploy alice counter Counter -v 10000000
+rskcli deploy charlie token Token string,string TOK,Token --value 100000000
+```
+
 ### Invoke a Contract
 
 ### Call a Contract
