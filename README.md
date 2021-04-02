@@ -667,6 +667,7 @@ with output types but no argument; verbose options
 in some commands; execute command remove verb from 
 arguments; improved newaccount and accounts commands;
 invoke command saves latest transaction
+- 0.0.3: using rskapi@0.0.20 with simpleabi@0.0.9 with better bytes<n> encoding/decoding
 
 ## References
 
