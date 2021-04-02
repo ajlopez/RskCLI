@@ -254,7 +254,7 @@ rskcli balance <account>
 
 The account could be specified as an hexadecimal address or as an account name.
 
-Also, you can specified a block number:
+Also, you can specify a block number:
 ```
 rskcli balance <account> <blocknumber>
 ```
@@ -356,7 +356,7 @@ The sender should be an account:
 - An account with a known private key, ie, created with `newaccount` command
 or with `setaccount` given a private key.
 
-The gas limit used for a transfer is `21000` units, but you can specified
+The gas limit used for a transfer is `21000` units, but you can specify
 the gas limit to use with the option `-g`, `--gas`, examples:
 
 ```
@@ -470,8 +470,81 @@ instance using the option `-v`, `--value`, examples:
 rskcli deploy alice counter Counter -v 10000000
 rskcli deploy charlie token Token string,string TOK,Token --value 100000000
 ```
+In this use case, the contract constructor should allow the
+reception of value (in Solidity, the constructor should be
+a `payable` one)
 
 ### Invoke a Contract
+
+To invoke a deployed smart contract instance:
+```
+rskcli invoke <sender> <instancename> <functionsignature> [<arguments>]
+rskcli invoke <sender> <instanceaddress> <functionsignature> [<arguments>]
+```
+
+Example:
+```
+rskcli invoke alice counter increment()
+rskcli invoke alice token transfer(address,uint256) bob,1000000
+```
+
+In the latter example the token amount to transfer is expressed as `uint256`. The
+value is not expressed in token integer units: the token usually
+has a 18 decimal implicit positions. So to transfer a full token
+unit in a token with 6 decimals, you must use `1000000`, and if the
+token have been defined with 18 decimals, you must use
+`1000000000000000000`.
+
+
+The sender should be an account:
+- Exposed in the node you are using (like in `ganache` or RSK `regtest`)
+- An account with a known private key, ie, created with `newaccount` command
+or with `setaccount` given a private key.
+
+If they are more than one argument, their values are separated by commas.
+
+The gas limit used for an invoke operation is `5_000_000` units, but you can specify
+the gas limit with the option `-g`, `--gas`, examples:
+
+```
+rskcli invoke alice counter increment() -g 100000
+rskcli invoke bob token transfer(address,uint256) charlie,1000000 --gas 100000
+```
+
+The gas price is set using the value informed by the network. If you
+want to set the gas price explicitly, use the `-gp`, `--gasPrice` option:
+
+```
+rskcli invoke alice counter increment() -gp 100000
+rskcli invoke bob token transfer(address,uint256) charlie,1000000 --gasPrice 100000
+```
+When the invoke transaction is sent to the node, the
+transaction hash is shown in the console. Then, the command waits
+for the mining of the transaction, querying for the transaction receipt that
+describes its execution result.
+
+If you want to skip that time, use the `-q`, `--quick` flag:
+
+```
+rskcli invoke alice counter increment() -q
+rskcli invoke alice counter add(uint256) 42 --quick
+```
+
+The invoke transaction is sent but it is up to you to check its inclusion into
+the blockchain. You must check manually the existence
+of a corresponding receipt using `receipt` command.
+
+You can specify a value to be transferred to the invoked
+instance using the option `-v`, `--value`, examples:
+
+```
+rskcli invoke alice counter increment() -v 10000000
+rskcli invoke bob token transfer(address,uint256) --value 100000000
+```
+
+In this use case, the invoked function should allow the
+reception of value (in Solidity, the function should be
+a `payable` one).
 
 ### Call a Contract
 
