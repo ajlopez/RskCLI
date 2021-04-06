@@ -166,6 +166,10 @@ exports['get null arguments'] = function (test) {
     test.deepEqual(utils.getArguments({}, null), []);
 };
 
+exports['get zero argument'] = function (test) {
+    test.deepEqual(utils.getArguments({}, 0), [ 0 ]);
+};
+
 exports['get arguments from number'] = function (test) {
     test.deepEqual(utils.getArguments({}, 42), [ 42 ]);
 };

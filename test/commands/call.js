@@ -38,6 +38,37 @@ exports['call'] = async function (test) {
     test.done();
 };
 
+exports['call with zero as argument'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    newaccount.execute([ 'contract' ]);   
+    
+    const config = configs.loadConfiguration();
+    
+    const cpath = path.join(__dirname, '..', 'contracts');
+    const contract = require(path.join(cpath, 'build', 'contracts', 'Counter.json'));
+    
+    const client = {
+        call: function (from, to, fn, args, options) {
+            test.deepEqual(from, config.accounts.alice);
+            test.equal(to, config.accounts.contract.address);
+            test.deepEqual(options, {});
+            test.equal(fn, "bar(uint256)");
+            test.deepEqual(args, [ 0 ]);
+            
+            return '0x010203';
+        }
+    };
+    
+    call.useClient(client);
+    
+    const result = await call.execute([ 'alice', 'contract', 'bar(uint256)', "0" ]);
+    
+    test.ok(result);
+    test.deepEqual(result, '0x010203');
+    
+    test.done();
+};
+
 exports['call returning string'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     newaccount.execute([ 'contract' ]);   
