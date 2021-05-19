@@ -46,6 +46,49 @@ exports['transfer'] = async function (test) {
     test.done();
 };
 
+exports['transfer big number'] = async function (test) {
+    newaccount.execute([ 'alice' ]);   
+    newaccount.execute([ 'bob' ]);
+    
+    const config = configs.loadConfiguration();
+    
+    const client = {
+        transfer: function (from, to, value, options) {
+            test.deepEqual(from, config.accounts.alice);
+            test.equal(to, config.accounts.bob.address);
+            test.equal(value, '1000000000000000000');
+            test.deepEqual(options, {});
+            
+            return '0x010203';
+        },
+        receipt: function (txhash, times) {
+            test.equal(txhash, '0x010203');
+            test.equal(times, 0);
+            
+            return {
+                hash: txhash,
+                status: '0x1'
+            }
+        }
+    };
+    
+    transfer.useClient(client);
+    
+    const txr = await transfer.execute([ 'alice', 'bob', '1000000000000000000' ]);
+    
+    test.ok(txr);
+    test.deepEqual(txr, { hash: '0x010203', status: '0x1' });
+    
+    const newconfig = configs.loadConfiguration();
+    
+    test.ok(newconfig);
+    test.ok(newconfig.latest);
+    test.ok(newconfig.latest.transaction);
+    test.equal(newconfig.latest.transaction, '0x010203');
+    
+    test.done();
+};
+
 exports['transfer with quick flag'] = async function (test) {
     newaccount.execute([ 'alice' ]);   
     newaccount.execute([ 'bob' ]);
